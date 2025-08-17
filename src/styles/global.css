@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
+:root {
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #166534;
+  --color-primary-900: #14532d;
+  --color-primary-950: #052e16;
+  
+  --color-secondary-50: #fefce8;
+  --color-secondary-100: #fef9c3;
+  --color-secondary-200: #fef08a;
+  --color-secondary-300: #fde047;
+  --color-secondary-400: #facc15;
+  --color-secondary-500: #eab308;
+  --color-secondary-600: #ca8a04;
+  --color-secondary-700: #a16207;
+  --color-secondary-800: #854d0e;
+  --color-secondary-900: #713f12;
+  --color-secondary-950: #422006;
+  
+  --color-accent-50: #f8fafc;
+  --color-accent-100: #f1f5f9;
+  --color-accent-200: #e2e8f0;
+  --color-accent-300: #cbd5e1;
+  --color-accent-400: #94a3b8;
+  --color-accent-500: #64748b;
+  --color-accent-600: #475569;
+  --color-accent-700: #334155;
+  --color-accent-800: #1e293b;
+  --color-accent-900: #0f172a;
+  --color-accent-950: #020617;
+}
+
+/* Basic Component Classes */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+}
+
+.btn-secondary {
+  @apply bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+}
+
+.btn-outline {
+  @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white focus:ring-primary-500;
+}
+
+.btn-sm {
+  @apply px-4 py-2 text-sm rounded-lg;
+}
+
+.btn-lg {
+  @apply px-8 py-4 text-lg rounded-2xl;
+}
+
+.card {
+  @apply bg-white rounded-2xl shadow-sm border border-accent-100 hover:shadow-lg transition-all duration-300 hover:border-accent-200;
+}
+
+.card-hover {
+  @apply hover:shadow-xl hover:-translate-y-1;
+}
+
+.input {
+  @apply w-full px-4 py-3 border border-accent-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 bg-white;
+}
+
+.select {
+  @apply input appearance-none bg-no-repeat bg-right pr-10;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+  @apply bg-primary-100 text-primary-800;
+}
+
+.badge-secondary {
+  @apply bg-secondary-100 text-secondary-800;
+}
+
+.badge-accent {
+  @apply bg-accent-100 text-accent-800;
+}
+
+.section {
+  @apply py-16 md:py-20 lg:py-24;
+}
+
+.section-sm {
+  @apply py-8 md:py-12 lg:py-16;
+}
+
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.nav-link {
+  @apply text-accent-600 hover:text-primary-600 font-medium transition-colors duration-200 relative;
+}
+
+.hero {
+  @apply relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50;
+}
+
+.profile-card {
+  @apply card card-hover p-6 text-center;
+}
+
+.profile-avatar {
+  @apply w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 rounded-full object-cover border-4 border-white shadow-lg transition-transform duration-300;
+}
+
+.profile-avatar-placeholder {
+  @apply profile-avatar bg-gradient-to-br from-primary-400 to-secondary-400 flex items-center justify-center text-white font-bold text-2xl;
+}
+
+.event-card {
+  @apply card card-hover p-6;
+}
+
+.blog-card {
+  @apply card card-hover p-6;
+}
+
+.mega-menu {
+  @apply absolute top-full left-0 right-0 bg-white border-t border-accent-100 shadow-2xl rounded-b-2xl opacity-0 invisible translate-y-2 transition-all duration-300 z-50;
+  min-width: 800px;
+  max-width: 1200px;
+  left: 50%;
+  transform: translateX(-50%) translateY(2px);
+}
+
+.mega-menu.show,
+.group:hover .mega-menu {
+  @apply opacity-100 visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Ensure mega menu is visible on group hover */
+.group:hover .mega-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+/* Improve mega menu hover behavior */
+.mega-menu {
+  pointer-events: none;
+}
+
+.group:hover .mega-menu {
+  pointer-events: auto;
+}
+
+/* Smooth transition for mega menu */
+.mega-menu {
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+/* Responsive mega menu positioning */
+@media (max-width: 1280px) {
+  .mega-menu {
+    min-width: 600px;
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mega-menu {
+    min-width: 500px;
+    max-width: 600px;
+  }
+}
+
+.mega-menu-content {
+  @apply py-8 px-8;
+}
+
+.mega-menu-section {
+  @apply space-y-4;
+}
+
+.mega-menu-title {
+  @apply text-sm font-semibold text-accent-900 uppercase tracking-wider mb-4;
+}
+
+.mega-menu-links {
+  @apply space-y-2;
+}
+
+.mega-menu-link {
+  @apply block text-accent-600 hover:text-primary-600 transition-colors duration-200 py-1;
+}
+
+/* Responsive mega menu content */
+@media (max-width: 1280px) {
+  .mega-menu-content {
+    @apply py-6 px-6;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mega-menu-content {
+    @apply py-4 px-4;
+  }
+}
+
+.grid-responsive {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid-responsive-sm {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.grid-responsive-lg {
+  @apply grid gap-8;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hover effects */
+.profile-card:hover .profile-avatar {
+  transform: scale(1.05);
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  .section {
+    @apply py-12;
+  }
+  .section-sm {
+    @apply py-6;
+  }
+}

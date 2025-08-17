@@ -1,0 +1,115 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { getSiteConfig } from '@/utils/config';
+
+export async function getStaticPaths() {
+  const config = getSiteConfig();
+  const years = [];
+  for (let year = config.years.start; year <= config.years.end; year++) {
+    years.push({ params: { year: year.toString() }, props: { year: year.toString() } });
+  }
+  return years;
+}
+
+const config = getSiteConfig();
+const { year } = Astro.props as { year: string };
+const alumni = (await getCollection('alumni')).filter(a => a.data.year.toString() === year);
+const yearLabel = `Class of ${year}`;
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni/profiles' },
+  { label: 'Years', href: '/alumni/years' },
+  { label: yearLabel },
+];
+---
+
+<Layout title={yearLabel}>
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-accent-900 mb-4">
+          {yearLabel}
+        </h1>
+        <p class="text-xl text-accent-600 max-w-3xl mx-auto">
+          Meet the talented alumni who graduated in {year}. Connect with your classmates and discover what they've been up to since graduation.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-primary-900">{alumni.length}</h3>
+          <p class="text-primary-700">Total Alumni</p>
+        </div>
+        <div class="bg-gradient-to-br from-secondary-50 to-secondary-100 p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-secondary-900">{[...new Set(alumni.map(a => a.data.faculty))].length}</h3>
+          <p class="text-secondary-700">Faculties</p>
+        </div>
+        <div class="bg-gradient-to-br from-accent-50 to-accent-100 p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.605-9-1.65M21 13.255A23.931 23.931 0 0012 15c-3.183 0-6.22-.605-9-1.65M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.605-9-1.65M21 13.255A23.931 23.931 0 0012 15c-3.183 0-6.22-.605-9-1.65"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-accent-900">{year}</h3>
+          <p class="text-accent-700">Graduation Year</p>
+        </div>
+      </div>
+
+      <!-- Alumni Grid -->
+      {alumni.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {alumni.map(a => (
+            <a href={`/alumni/profiles/${a.data.slug}`} class="card card-hover block">
+              <div class="p-6">
+                <div class="flex items-center gap-4 mb-4">
+                  {a.data.photo ? (
+                    <img src={a.data.photo} alt={a.data.name} class="w-16 h-16 rounded-full object-cover border" />
+                  ) : (
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-secondary-400 flex items-center justify-center text-white font-bold text-lg border">
+                      {a.data.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                    </div>
+                  )}
+                  <div>
+                    <h3 class="text-lg font-semibold">{a.data.name}</h3>
+                    <p class="text-sm text-primary-600">{a.data.faculty}</p>
+                  </div>
+                </div>
+                <p class="text-gray-600 text-sm">{a.data.short_bio}</p>
+              
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <div class="w-24 h-24 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-accent-900 mb-2">No Alumni Found</h3>
+          <p class="text-accent-600 mb-6">We don't have any alumni records for the Class of {year} yet.</p>
+          <a href="/alumni/profiles" class="btn btn-primary">
+            Browse All Alumni
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+

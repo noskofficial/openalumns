@@ -1,0 +1,65 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { getSiteConfig } from '@/utils/config';
+
+export async function getStaticPaths() {
+  const config = getSiteConfig();
+  return config.faculties.map(f => ({ params: { faculty: f.slug }, props: { faculty: f.slug } }));
+}
+
+const config = getSiteConfig();
+const { faculty } = Astro.props as { faculty: string };
+const alumni = (await getCollection('alumni')).filter(a => a.data.faculty.toLowerCase().includes(faculty.toLowerCase()));
+const facultyName = config.faculties.find(f => f.slug === faculty)?.name || faculty;
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Faculties', href: '/alumni/faculties' },
+  { label: facultyName },
+];
+---
+
+<Layout title={facultyName}>
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <h1 class="text-3xl font-bold mb-6">{facultyName}</h1>
+            <!-- Alumni Grid -->
+      {alumni.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {alumni.map(a => (
+          <a href={`/alumni/profiles/${a.data.slug}`} class="card card-hover block">
+            <div class="p-6">
+              <div class="flex items-center gap-4 mb-4">
+                <img src={a.data.photo || '/logo.svg'} alt={a.data.name} class="w-16 h-16 rounded-full object-cover border" />
+                <div>
+                  <h3 class="text-lg font-semibold">{a.data.name}</h3>
+                  <p class="text-sm text-primary-600">{a.data.faculty}, {a.data.year}</p>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm">{a.data.short_bio}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+  ) : (
+ <div class="text-center py-12">
+          <div class="mb-6">
+            <svg class="w-16 h-16 text-primary-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-accent-900 mb-2">No Alumni Found</h3>
+          <p class="text-accent-600 mb-6">We don't have any alumni records for the {facultyName} faculty yet.</p>
+          <a href="/alumni/profiles" class="btn btn-primary">
+            Browse All Alumni
+          </a>
+        </div>
+  )}
+      </div>
+  </section>
+</Layout>

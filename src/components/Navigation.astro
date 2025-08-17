@@ -1,0 +1,231 @@
+---
+import { getSiteConfig } from '../utils/config';
+import { Icon } from 'astro-icon';
+
+const config = getSiteConfig();
+---
+
+<nav class="bg-white/95 backdrop-blur border-b border-accent-100 sticky top-0 z-50">
+  <div class="container-custom">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center space-x-3 group">
+          <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center shadow-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+        {config.site.logo ? (
+          <img src={config.site.logo} alt={`${config.site.name} logo`} class="w-full h-full object-contain" />
+        ) : (
+          <Icon name="mdi:account-group" class="w-7 h-7 text-white" />
+        )}
+          </div>
+          <div>
+        <h1 class="text-xl lg:text-2xl font-bold text-accent-900 group-hover:text-primary-600 transition-colors duration-200">
+          {config.site.name}
+        </h1>
+        <p class="text-xs text-accent-500 hidden sm:block">Alumni Network</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-8">
+        {config.navigation.map((item) => (
+          <div class="relative group">
+            {item.mega_menu ? (
+              <div class="relative">
+                <button class="nav-link flex items-center space-x-1 py-2">
+                  <span>{item.label}</span>
+                  <Icon name="mdi:chevron-down" class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+                </button>
+                
+                <!-- Mega Menu -->
+                <div class="mega-menu">
+                  <div class="mega-menu-content">
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-8">
+                      <!-- Years Section -->
+                      <div class="mega-menu-section">
+                        <h3 class="mega-menu-title">Browse by Year</h3>
+                        <div class="mega-menu-links max-h-64 overflow-y-auto scrollbar-hide">
+                          <div class="grid grid-cols-2 xl:grid-cols-1 gap-2">
+                            {Array.from({ length: config.years.end - config.years.start + 1 }, (_, i) => {
+                              const year = config.years.end - i;
+                              return (
+                                <a href={`/alumni/years/${year}`} class="mega-menu-link flex items-center space-x-2 hover:bg-accent-50 px-3 py-2 rounded-lg -mx-3 -my-2">
+                                  <Icon name="mdi:calendar" class="w-4 h-4 text-accent-400 flex-shrink-0" />
+                                  <span class="truncate">{year}</span>
+                                  <span class="text-xs text-accent-400 ml-auto hidden xl:inline">
+                                    {config.content.alumni_per_page} alumni
+                                  </span>
+                                </a>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Faculties Section -->
+                      <div class="mega-menu-section">
+                        <h3 class="mega-menu-title">Browse by Faculty</h3>
+                        <div class="mega-menu-links max-h-64 overflow-y-auto scrollbar-hide">
+                          <div class="grid grid-cols-1 gap-2">
+                            {config.faculties.map((faculty) => (
+                              <a href={`/alumni/faculties/${faculty.slug}`} class="mega-menu-link flex items-center space-x-2 hover:bg-accent-50 px-3 py-2 rounded-lg -mx-3 -my-2">
+                                <Icon name="mdi:school" class="w-4 h-4 text-accent-400 flex-shrink-0" />
+                                <span class="truncate">{faculty.name}</span>
+                                <span class="text-xs text-accent-400 ml-auto hidden xl:inline">
+                                  {faculty.description}
+                                </span>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="mt-6 xl:mt-8 pt-4 xl:pt-6 border-t border-accent-100">
+                      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+                        <a href="/alumni" class="btn btn-primary btn-sm w-full justify-center">
+                          <Icon name="mdi:account-search" class="w-4 h-4 mr-2" />
+                          <span class="hidden sm:inline">View All Alumni</span>
+                          <span class="sm:hidden">All Alumni</span>
+                        </a>
+                        <a href="/alumni/years" class="btn btn-outline btn-sm w-full justify-center">
+                          <Icon name="mdi:calendar-multiple" class="w-4 h-4 mr-2" />
+                          <span class="hidden sm:inline">Browse by Year</span>
+                          <span class="sm:hidden">By Year</span>
+                        </a>
+                        <a href="/alumni/faculties" class="btn btn-outline btn-sm w-full justify-center">
+                          <Icon name="mdi:school-outline" class="w-4 h-4 mr-2" />
+                          <span class="hidden sm:inline">Browse by Faculty</span>
+                          <span class="sm:hidden">By Faculty</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a href={item.url} class="nav-link py-2">
+                {item.icon && <Icon name={`mdi:${item.icon}`} class="w-4 h-4 mr-2" />}
+                {item.label}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        id="mobile-menu-btn"
+        class="lg:hidden p-2 rounded-lg text-accent-600 hover:text-accent-900 hover:bg-accent-100 transition-colors duration-200"
+        aria-label="Toggle mobile menu"
+      >
+        <Icon name="mdi:menu" class="w-6 h-6" />
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="lg:hidden hidden">
+      <div class="py-4 space-y-2 border-t border-accent-100">
+        {config.navigation.map((item) => (
+          <div class="space-y-2">
+            {item.mega_menu ? (
+              <div class="space-y-2">
+                <button 
+                  class="mobile-mega-toggle w-full text-left px-4 py-3 text-accent-700 hover:text-primary-600 hover:bg-accent-50 rounded-lg transition-colors duration-200 flex items-center justify-between"
+                  data-target={`mobile-mega-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <span class="font-medium">{item.label}</span>
+                  <Icon name="mdi:chevron-down" class="w-5 h-5 transition-transform duration-200" />
+                </button>
+                
+                <div id={`mobile-mega-${item.label.toLowerCase().replace(/\s+/g, '-')}`} class="mobile-mega-content hidden pl-4 space-y-2">
+                  <!-- Years -->
+                  <div class="space-y-2">
+                    <h4 class="text-sm font-semibold text-accent-900 uppercase tracking-wider px-4 py-2">By Year</h4>
+                    <div class="grid grid-cols-2 gap-2 px-4">
+                      {Array.from({ length: Math.min(6, config.years.end - config.years.start + 1) }, (_, i) => {
+                        const year = config.years.end - i;
+                        return (
+                          <a href={`/year/${year}`} class="text-sm text-accent-600 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-accent-50 transition-colors duration-200">
+                            {year}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+                  <!-- Faculties -->
+                  <div class="space-y-2">
+                    <h4 class="text-sm font-semibold text-accent-900 uppercase tracking-wider px-4 py-2">By Faculty</h4>
+                    <div class="space-y-1 px-4">
+                      {config.faculties.map((faculty) => (
+                        <a href={`/faculty/${faculty.slug}`} class="block text-sm text-accent-600 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-accent-50 transition-colors duration-200">
+                          {faculty.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <!-- Quick Actions -->
+                  <div class="pt-4 border-t border-accent-100 mt-4">
+                    <a href="/alumni" class="block w-full text-center btn btn-primary btn-sm">
+                      View All Alumni
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a href={item.url} class="block px-4 py-3 text-accent-700 hover:text-primary-600 hover:bg-accent-50 rounded-lg transition-colors duration-200">
+                {item.icon && <Icon name={`mdi:${item.icon}`} class="w-4 h-4 mr-3 inline" />}
+                {item.label}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+  
+  // Mobile mega menu toggles
+  const mobileMegaToggles = document.querySelectorAll('.mobile-mega-toggle');
+  
+  mobileMegaToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const targetId = toggle.getAttribute('data-target');
+      if (!targetId) return;
+      const targetContent = document.getElementById(targetId);
+      const icon = toggle.querySelector('svg');
+      
+      if (targetContent) {
+        targetContent.classList.toggle('hidden');
+        icon?.classList.toggle('rotate-180');
+      }
+    });
+  });
+  
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu?.contains(e.target as Node) && !mobileMenuBtn?.contains(e.target as Node)) {
+      mobileMenu?.classList.add('hidden');
+    }
+  });
+  
+  // Close mobile menu on window resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+      mobileMenu?.classList.add('hidden');
+    }
+  });
+</script>

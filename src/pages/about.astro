@@ -1,0 +1,305 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteConfig } from '../utils/config';
+
+const config = getSiteConfig();
+---
+
+<Layout title="About" description="Learn about our alumni network, mission, and the team behind the Open Alumns Portal.">
+  <!-- Page Header -->
+  <section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16">
+    <div class="container-custom text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">About Our Alumni Network</h1>
+      <p class="text-xl text-gray-100 max-w-3xl mx-auto">
+        Building bridges between past, present, and future generations of graduates
+      </p>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section class="bg-gray-50 py-4">
+    <div class="container-custom">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2">
+          <li>
+            <a href="/" class="text-gray-500 hover:text-primary-600 transition-colors">Home</a>
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-gray-400 mx-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-gray-900 font-medium">About</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="section">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">Our Mission</h2>
+          <p class="text-lg text-gray-600 mb-6">
+            The Open Alumns Portal is dedicated to fostering lifelong connections between graduates, 
+            creating opportunities for collaboration, mentorship, and professional growth within our 
+            diverse community of alumni.
+          </p>
+          <p class="text-lg text-gray-600 mb-6">
+            We believe that the strength of our network lies in the collective wisdom, experience, 
+            and achievements of our members. By providing a platform for meaningful engagement, 
+            we empower our alumni to support each other's success and contribute to the advancement 
+            of their respective fields.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex items-center text-primary-600">
+              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span class="font-medium">Professional Networking</span>
+            </div>
+            <div class="flex items-center text-primary-600">
+              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span class="font-medium">Mentorship Programs</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-8">
+            <div class="text-center">
+              <div class="w-20 h-20 mx-auto mb-4 bg-primary-600 rounded-full flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">Building Connections</h3>
+              <p class="text-gray-600">
+                Connecting alumni across generations, industries, and geographical boundaries
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="section bg-gray-50">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          The principles that guide our community and shape our collective future
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Value 1 -->
+        <div class="card text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-primary-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Community First</h3>
+          <p class="text-gray-600">
+            We prioritize the well-being and success of our community members, fostering an environment 
+            of mutual support and collaboration.
+          </p>
+        </div>
+
+        <!-- Value 2 -->
+        <div class="card text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-secondary-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Excellence</h3>
+          <p class="text-gray-600">
+            We strive for excellence in everything we do, encouraging our members to pursue their 
+            passions and achieve their highest potential.
+          </p>
+        </div>
+
+        <!-- Value 3 -->
+        <div class="card text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-accent-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Innovation</h3>
+          <p class="text-gray-600">
+            We embrace innovation and creativity, supporting our members in developing new ideas 
+            and pushing the boundaries of what's possible.
+          </p>
+        </div>
+
+        <!-- Value 4 -->
+        <div class="card text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-primary-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Inclusivity</h3>
+          <p class="text-gray-600">
+            We celebrate diversity and create an inclusive environment where all members feel 
+            welcome, valued, and empowered to contribute.
+          </p>
+        </div>
+
+        <!-- Value 5 -->
+        <div class="card text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-secondary-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Lifelong Learning</h3>
+          <p class="text-gray-600">
+            We believe in the power of continuous learning and personal development, providing 
+            opportunities for growth throughout our members' careers.
+          </p>
+        </div>
+
+        <!-- Value 6 -->
+        <div class="card text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-accent-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Global Impact</h3>
+          <p class="text-gray-600">
+            We aim to make a positive impact on the world through the collective efforts 
+            and achievements of our global alumni community.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Team</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Meet the dedicated individuals behind the Open Alumns Portal
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="card text-center p-6">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-400 to-secondary-400 flex items-center justify-center text-white text-2xl font-bold">
+            NS
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Nepal Open Source Klub</h3>
+          <p class="text-primary-600 mb-3">Lead Organization</p>
+          <p class="text-gray-600 mb-4">
+            A community-driven organization dedicated to promoting open source software and 
+            fostering innovation in Nepal's tech ecosystem.
+          </p>
+          <div class="flex justify-center space-x-3">
+            <a href={config.organization.website} class="text-primary-600 hover:text-primary-700 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="card text-center p-6">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-secondary-400 to-primary-400 flex items-center justify-center text-white text-2xl font-bold">
+            CD
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Community Developers</h3>
+          <p class="text-primary-600 mb-3">Open Source Contributors</p>
+          <p class="text-gray-600 mb-4">
+            A diverse group of developers, designers, and contributors from around the world 
+            who believe in the power of open source collaboration.
+          </p>
+          <div class="flex justify-center space-x-3">
+            <a href="https://github.com/noskofficial/open-alumns" class="text-primary-600 hover:text-primary-700 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="card text-center p-6">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent-400 to-primary-400 flex items-center justify-center text-white text-2xl font-bold">
+            YO
+          </div>
+          <h3 class="text-xl font-semibold mb-2">You</h3>
+          <p class="text-primary-600 mb-3">Future Contributor</p>
+          <p class="text-gray-600 mb-4">
+            Join our community and help shape the future of the Open Alumns Portal. 
+            Your contributions can make a real difference.
+          </p>
+          <div class="flex justify-center space-x-3">
+            <a href="https://github.com/noskofficial/open-alumns" class="text-primary-600 hover:text-primary-700 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved Section -->
+  <section class="section bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Get Involved</h2>
+      <p class="text-xl mb-8 max-w-3xl mx-auto">
+        Whether you're an alumni member, a developer, or simply passionate about building 
+        stronger communities, there are many ways to get involved with our project.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white bg-opacity-10 rounded-lg p-6">
+          <h3 class="text-xl font-semibold mb-3">Join as Alumni</h3>
+          <p class="text-gray-100">
+            Connect with fellow graduates and stay updated with community events and opportunities.
+          </p>
+        </div>
+        <div class="bg-white bg-opacity-10 rounded-lg p-6">
+          <h3 class="text-xl font-semibold mb-3">Contribute Code</h3>
+          <p class="text-gray-100">
+            Help improve the portal by contributing to our open-source codebase on GitHub.
+          </p>
+        </div>
+        <div class="bg-white bg-opacity-10 rounded-lg p-6">
+          <h3 class="text-xl font-semibold mb-3">Spread the Word</h3>
+          <p class="text-gray-100">
+            Share our project with your network and help us grow our community.
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://github.com/noskofficial/open-alumns" class="btn btn-secondary btn-lg">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          Contribute on GitHub
+        </a>
+        <a href="/contact" class="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary-700">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

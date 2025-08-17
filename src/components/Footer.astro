@@ -1,0 +1,170 @@
+---
+import { getSiteConfig } from '../utils/config';
+import { Icon } from 'astro-icon';
+
+const config = getSiteConfig();
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-accent-900 text-white">
+  <div class="container-custom py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- Organization Info -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-3 mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
+            {config.site.logo ? (
+              <img src={config.site.logo} alt={`${config.site.name} logo`} class="w-full h-full object-contain" />
+            ) : (
+              <Icon name="mdi:account-group" class="w-7 h-7 text-white" />
+            )}
+            </div>
+          <div>
+            <h3 class="text-2xl font-bold text-white">{config.site.name}</h3>
+            <p class="text-accent-300 text-sm">Alumni Network</p>
+          </div>
+        </div>
+        <p class="text-accent-300 mb-6 leading-relaxed max-w-md">
+          {config.site.description}
+        </p>
+        <div class="flex space-x-4">
+          {config.social_links.map((social) => (
+            <a 
+              href={social.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="w-10 h-10 bg-accent-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              aria-label={social.name}
+            >
+              <Icon name={`mdi:${social.icon}`} class="w-5 h-5" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-lg font-semibold mb-6 text-white">Quick Links</h4>
+        <ul class="space-y-3">
+          {config.navigation.slice(0, 6).map((item) => (
+            <li>
+              <a 
+                href={item.url} 
+                class="text-accent-300 hover:text-primary-400 transition-colors duration-200 flex items-center space-x-2 group"
+              >
+                <Icon name={`mdi:${item.icon || 'arrow-right'}`} class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h4 class="text-lg font-semibold mb-6 text-white">Contact Us</h4>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="mdi:map-marker" class="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <p class="text-accent-300 text-sm leading-relaxed">
+                {config.organization.address}
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="mdi:email" class="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <a href={`mailto:${config.contact.email}`} class="text-accent-300 hover:text-primary-400 transition-colors duration-200 text-sm">
+                {config.contact.email}
+              </a>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="mdi:phone" class="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <a href={`tel:${config.contact.phone}`} class="text-accent-300 hover:text-primary-400 transition-colors duration-200 text-sm">
+                {config.contact.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    {config.features.newsletter && (
+      <div class="border-t border-accent-800 pt-8 mb-8">
+        <div class="max-w-2xl mx-auto text-center">
+          <h4 class="text-xl font-semibold mb-4 text-white">Stay Connected</h4>
+          <p class="text-accent-300 mb-6">
+            Subscribe to our newsletter for the latest updates, events, and alumni news.
+          </p>
+          <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              class="flex-1 px-4 py-3 rounded-lg bg-accent-800 border border-accent-700 text-white placeholder-accent-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200"
+              required
+            />
+            <button 
+              type="submit" 
+              class="btn btn-primary px-6 py-3 rounded-lg whitespace-nowrap"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    )}
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-accent-800 pt-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-accent-400 text-sm text-center md:text-left">
+          <p>
+            © {currentYear} {config.organization.name}. All rights reserved.
+          </p>
+          <p class="mt-1">
+            Built with ❤️ by <a href="https://nosk.org.np" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:text-primary-300 transition-colors duration-200">NOSK</a>
+          </p>
+        </div>
+        
+        <div class="flex items-center space-x-6 text-sm">
+          <a href="/privacy" class="text-accent-400 hover:text-primary-400 transition-colors duration-200">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="text-accent-400 hover:text-primary-400 transition-colors duration-200">
+            Terms of Service
+          </a>
+          <a href="/about" class="text-accent-400 hover:text-primary-400 transition-colors duration-200">
+            About
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Newsletter form handling
+  const newsletterForm = document.querySelector('form');
+  
+  newsletterForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    
+    // Here you would typically send the email to your backend
+    // For now, we'll just show a success message
+    alert('This work is yet to be implemented. We would love if you could send a merge request to implement this feature.');
+    e.target.reset();
+  });
+</script>

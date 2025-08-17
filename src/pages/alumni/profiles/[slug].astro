@@ -1,0 +1,181 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon';
+
+export async function getStaticPaths() {
+  const alumni = await getCollection('alumni');
+  return alumni.map(a => ({ params: { slug: a.data.slug }, props: { alum: a.data } }));
+}
+
+const { alum } = Astro.props as { alum: any };
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: alum.name },
+];
+
+const socials = alum.social || {};
+---
+
+<Layout title={alum.name} description={alum.short_bio}>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="section py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Sidebar -->
+        <aside class="lg:col-span-1 bg-white shadow-md rounded-2xl p-6 text-center">
+          <img 
+            src={alum.photo || '/logo.svg'} 
+            alt={alum.name} 
+            class="w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border mx-auto mb-4" 
+          />
+          <h1 class="text-2xl font-bold">{alum.name}</h1>
+          <p class="text-primary-600 mt-1">{alum.faculty}, {alum.year}</p>
+
+          <div class="mt-4 space-y-2 text-sm text-gray-700">
+            {alum.position && <p><strong>Position:</strong> {alum.position}</p>}
+            {alum.company && <p><strong>Company:</strong> {alum.company}</p>}
+            {alum.location && <p><strong>Location:</strong> {alum.location}</p>}
+            {alum.email && (
+              <p>
+                <strong>Email:</strong> 
+                <a href={`mailto:${alum.email}`} class="text-primary-600 hover:underline ml-1">
+                  {alum.email}
+                </a>
+              </p>
+            )}
+          </div>
+
+          {Object.values(socials).some(Boolean) && (
+            <div class="mt-6 flex justify-center gap-5 text-gray-600">
+              {socials.linkedin && (
+                <a href={socials.linkedin} target="_blank" class="hover:text-primary-600">
+                  <Icon name="mdi:linkedin" class="w-6 h-6" />
+                </a>
+              )}
+              {socials.github && (
+                <a href={socials.github} target="_blank" class="hover:text-primary-600">
+                  <Icon name="mdi:github" class="w-6 h-6" />
+                </a>
+              )}
+              {socials.twitter && (
+                <a href={socials.twitter} target="_blank" class="hover:text-primary-600">
+                  <Icon name="mdi:twitter" class="w-6 h-6" />
+                </a>
+              )}
+              {socials.portfolio && (
+                <a href={socials.portfolio} target="_blank" class="hover:text-primary-600">
+                  <Icon name="mdi:web" class="w-6 h-6" />
+                </a>
+              )}
+            </div>
+          )}
+        </aside>
+
+        <!-- Main content -->
+        <main class="lg:col-span-2 space-y-8">
+          <!-- About -->
+          <section class="bg-white shadow-md rounded-2xl p-6">
+            <h2 class="text-xl font-semibold mb-3">About</h2>
+            <p class="text-gray-700">{alum.long_bio}</p>
+          </section>
+
+          <!-- Skills -->
+          {alum.skills?.length > 0 && (
+            <section class="bg-white shadow-md rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-3">Skills</h2>
+              <div class="flex flex-wrap gap-2">
+                {alum.skills.map((skill: string) => (
+                  <span class="badge badge-primary">{skill}</span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Projects -->
+          {alum.projects?.length > 0 && (
+            <section class="bg-white shadow-md rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-3">Projects</h2>
+              <div class="space-y-4">
+                {alum.projects.map((project: any) => (
+                  <div>
+                    <h3 class="font-semibold">{project.name}</h3>
+                    <p class="text-gray-700 text-sm">{project.description}</p>
+                    {project.url && (
+                      <a 
+                        href={project.url} 
+                        target="_blank" 
+                        class="text-primary-600 text-sm hover:underline"
+                      >
+                        View Project
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Work Experience -->
+          {alum.work_experience?.length > 0 && (
+            <section class="bg-white shadow-md rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-3">Work Experience</h2>
+              <div class="space-y-4">
+                {alum.work_experience.map((exp: any) => (
+                  <div>
+                    <h3 class="font-semibold">{exp.position} - {exp.company}</h3>
+                    <p class="text-gray-500 text-sm">{exp.duration}</p>
+                    <p class="text-gray-700 text-sm">{exp.description}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Education -->
+          {alum.education?.length > 0 && (
+            <section class="bg-white shadow-md rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-3">Education</h2>
+              <div class="space-y-4">
+                {alum.education.map((ed: any) => (
+                  <div>
+                    <h3 class="font-semibold">{ed.degree}</h3>
+                    <p class="text-gray-700 text-sm">{ed.institution} ({ed.year})</p>
+                    {ed.gpa && <p class="text-gray-500 text-sm">GPA: {ed.gpa}</p>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Achievements -->
+          {alum.achievements?.length > 0 && (
+            <section class="bg-white shadow-md rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-3">Achievements</h2>
+              <ul class="list-disc list-inside text-gray-700">
+                {alum.achievements.map((a: string) => (<li>{a}</li>))}
+              </ul>
+            </section>
+          )}
+
+          <!-- Interests -->
+          {alum.interests?.length > 0 && (
+            <section class="bg-white shadow-md rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-3">Interests</h2>
+              <div class="flex flex-wrap gap-2">
+                {alum.interests.map((i: string) => (
+                  <span class="badge badge-secondary">{i}</span>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </main>
+      </div>
+    </div>
+  </section>
+</Layout>

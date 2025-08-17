@@ -1,0 +1,42 @@
+name: "Sarah Johnson"
+slug: "sarah-johnson"
+faculty: "Computer Engineering"
+year: 2022
+short_bio: "Full-stack developer passionate about creating user-friendly web applications"
+long_bio: "Sarah is a talented full-stack developer with expertise in React, Node.js, and cloud technologies. She loves solving complex problems and mentoring junior developers."
+photo: "/images/avatars/default-avatar.svg"
+email: "sarah.johnson@email.com"
+location: "San Francisco, CA"
+company: "TechCorp"
+position: "Senior Software Engineer"
+skills: ["React", "Node.js", "AWS", "TypeScript", "MongoDB"]
+projects:
+  - name: "E-commerce Platform"
+    description: "Built a scalable e-commerce solution using React and Node.js"
+    url: "https://github.com/sarahjohnson/ecommerce"
+  - name: "Task Management App"
+    description: "Collaborative task management application with real-time updates"
+    url: "https://github.com/sarahjohnson/taskapp"
+work_experience:
+  - company: "TechCorp"
+    position: "Senior Software Engineer"
+    duration: "2022 - Present"
+    description: "Leading development of web applications and mentoring junior developers"
+  - company: "StartupXYZ"
+    position: "Full-stack Developer"
+    duration: "2020 - 2022"
+    description: "Built and maintained multiple web applications using modern technologies"
+education:
+  - degree: "Bachelor of Engineering in Computer Engineering"
+    institution: "University of Technology"
+    year: 2022
+    gpa: "3.8/4.0"
+achievements:
+  - "Best Final Year Project Award"
+  - "Dean's List for 3 consecutive years"
+  - "Hackathon Winner - Tech Innovation Challenge"
+interests: ["Web Development", "Open Source", "Tech Meetups", "Reading"]
+social:
+  linkedin: "https://linkedin.com/in/sarah-johnson"
+  twitter: "https://twitter.com/sarahjohnson"
+  github: "https://github.com/sarahjohnson"

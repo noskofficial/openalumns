@@ -1,0 +1,40 @@
+name: "John Doe"
+slug: "john-doe"
+faculty: "Software Engineering"
+year: 2020
+short_bio: "Senior Software Engineer at TechCorp, specializing in AI and cloud solutions"
+long_bio: "John is a passionate software engineer with expertise in full-stack development, machine learning, and cloud technologies. He graduated with honors and has been working on innovative projects that solve real-world problems."
+photo: "/logo.png"
+email: "john.doe@email.com"
+location: "San Francisco, CA"
+company: "TechCorp"
+position: "Senior Software Engineer"
+skills: ["JavaScript", "Python", "React", "Node.js", "AWS", "Machine Learning", "Docker", "Kubernetes"]
+projects:
+  - name: "AI-Powered Chatbot"
+    description: "Developed an intelligent chatbot using natural language processing"
+    url: "https://github.com/johndoe/ai-chatbot"
+  - name: "Cloud Migration Tool"
+    description: "Built a tool to automate cloud infrastructure migration"
+    url: "https://github.com/johndoe/cloud-migrator"
+work_experience:
+  - company: "TechCorp"
+    position: "Senior Software Engineer"
+    duration: "2022 - Present"
+    description: "Leading development of cloud-native applications and AI solutions"
+  - company: "StartupXYZ"
+    position: "Software Engineer"
+    duration: "2020 - 2022"
+    description: "Full-stack development and DevOps practices implementation"
+education:
+  - degree: "Bachelor of Engineering in Software Engineering"
+    institution: "Nepal College of Information Technology"
+    year: 2020
+    gpa: "3.9/4.0"
+achievements:
+  - "Graduated with First Class Honors"
+  - "Best Final Year Project Award"
+  - "Microsoft Student Partner"
+  - "Published 3 research papers"
+interests: ["AI/ML", "Cloud Computing", "Open Source", "Research"]
+
