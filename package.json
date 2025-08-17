@@ -1,0 +1,48 @@
+{
+  "name": "open-alumns-portal",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "A production-ready, open-source alumni portal Astro theme for colleges and communities",
+  "author": "Nepal Open Source Klub (NOSK)",
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.0.0",
+    "@astrojs/vercel": "^7.0.0",
+    "astro": "^4.0.0",
+    "astro-icon": "^0.8.0",
+    "fuse.js": "^7.0.0",
+    "js-yaml": "^4.1.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.0",
+    "@types/node": "^20.0.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
+  },
+  "keywords": [
+    "astro",
+    "alumni",
+    "portal",
+    "theme",
+    "education",
+    "community",
+    "nosk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nepalopensource/open-alumns-portal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nepalopensource/open-alumns-portal/issues"
+  },
+  "homepage": "https://github.com/nepalopensource/open-alumns-portal#readme"
+}

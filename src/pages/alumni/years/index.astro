@@ -1,0 +1,25 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getSiteConfig } from '@/utils/config';
+
+const config = getSiteConfig();
+const years = Array.from({ length: config.years.end - config.years.start + 1 }, (_, i) => config.years.end - i);
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Years' },
+];
+---
+
+<Layout title="Years">
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <h1 class="text-3xl font-bold mb-6">Browse by Year</h1>
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+        {years.map(y => (<a class="card p-4 text-center" href={`/alumni/years/${y}`}>{y}</a>))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,395 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { getSiteConfig } from '@/utils/config';
+import { Icon } from 'astro-icon';
+
+const config = getSiteConfig();
+const alumni = await getCollection('alumni');
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Directory' },
+];
+
+// Get unique faculties and years for filters
+const faculties = [...new Set(alumni.map(a => a.data.faculty))];
+const years = [...new Set(alumni.map(a => a.data.year))].sort((a, b) => b - a);
+---
+
+<Layout title="Alumni Directory" description="Browse alumni by faculty, year, and search.">
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="section">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-accent-900 mb-4">
+          Alumni Directory
+        </h1>
+        <p class="text-xl text-accent-600 max-w-3xl mx-auto">
+          Connect with fellow alumni from {config.organization.name}. Browse profiles by faculty, graduation year, or search for specific alumni.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="mdi:account-group" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-2xl font-bold text-primary-900">{alumni.length}</h3>
+          <p class="text-primary-700">Total Alumni</p>
+        </div>
+        <div class="bg-gradient-to-br from-secondary-50 to-secondary-100 p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="mdi:school" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-2xl font-bold text-secondary-900">{faculties.length}</h3>
+          <p class="text-secondary-700">Faculties</p>
+        </div>
+        <div class="bg-gradient-to-br from-accent-50 to-accent-100 p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="mdi:calendar" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-2xl font-bold text-accent-900">{years.length}</h3>
+          <p class="text-accent-700">Graduation Years</p>
+        </div>
+      </div>
+
+      <!-- Filters and Search -->
+      <div class="bg-white rounded-2xl shadow-sm border border-accent-100 p-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <!-- Search -->
+          <div class="lg:col-span-2">
+            <label for="search" class="block text-sm font-medium text-accent-700 mb-2">Search Alumni</label>
+            <div class="search-wrapper">
+  <Icon name="mdi:magnify" class="search-icon" />
+  <input
+    type="text"
+    id="search"
+    placeholder="Search by name, faculty, or skills..."
+  />
+</div>
+          </div>
+          
+          <!-- Faculty Filter -->
+          <div>
+            <label for="faculty-filter" class="block text-sm font-medium text-accent-700 mb-2">Faculty</label>
+            <select id="faculty-filter" class="select">
+              <option value="">All Faculties</option>
+              {faculties.map((faculty) => (
+                <option value={faculty}>{faculty}</option>
+              ))}
+            </select>
+          </div>
+          
+          <!-- Year Filter -->
+          <div>
+            <label for="year-filter" class="block text-sm font-medium text-accent-700 mb-2">Graduation Year</label>
+            <select id="year-filter" class="select">
+              <option value="">All Years</option>
+              {years.map((year) => (
+                <option value={year}>{year}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Count -->
+      <div class="flex items-center justify-between mb-6">
+        <p class="text-accent-600">
+          Showing <span id="results-count">{alumni.length}</span> of {alumni.length} alumni
+        </p>
+        <div class="flex items-center space-x-2">
+          <span class="text-sm text-accent-600">Sort by:</span>
+          <select id="sort-by" class="select w-auto">
+            <option value="name">Name</option>
+            <option value="year">Graduation Year</option>
+            <option value="faculty">Faculty</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Alumni Grid -->
+      <div id="alumni-grid" class="grid-responsive-lg mb-8">
+                 {alumni.slice(0, config.content.alumni_per_page).map((alum) => (
+           <div class="profile-card" data-faculty={alum.data.faculty} data-year={alum.data.year} data-name={alum.data.name.toLowerCase()}>
+             <div class="relative">
+               {alum.data.photo ? (
+                 <img 
+                   src={alum.data.photo} 
+                   alt={alum.data.name}
+                   class="profile-avatar"
+                   loading="lazy"
+                 />
+               ) : (
+                 <div class="profile-avatar-placeholder">
+                   {alum.data.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                 </div>
+               )}
+               <div class="absolute top-0 right-0">
+                 <span class="badge badge-primary">{alum.data.faculty}</span>
+               </div>
+             </div>
+             
+             <h3 class="text-xl font-semibold text-accent-900 mb-2">{alum.data.name}</h3>
+             <p class="text-accent-600 mb-3">{alum.data.short_bio}</p>
+             
+             
+             <div class="flex items-center justify-between text-sm text-accent-500">
+               <span>Class of {alum.data.year}</span>
+               <a href={`/alumni/profiles/${alum.data.slug}`} class="text-primary-600 hover:text-primary-700 font-medium">
+                 View Profile →
+               </a>
+             </div>
+           </div>
+         ))}
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-center space-x-2">
+        <button id="prev-page" class="btn btn-outline btn-sm" disabled>
+          <Icon name="mdi:chevron-left" class="w-4 h-4 mr-1" />
+          Previous
+        </button>
+        
+        <div id="page-numbers" class="flex items-center space-x-1">
+          <!-- Page numbers will be generated by JavaScript -->
+        </div>
+        
+        <button id="next-page" class="btn btn-outline btn-sm">
+          Next
+          <Icon name="mdi:chevron-right" class="w-4 h-4 ml-1" />
+        </button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{
+  alumniData: alumni.map(a => ({
+    slug: a.data.slug,
+    name: a.data.name,
+    faculty: a.data.faculty,
+    year: a.data.year,
+    short_bio: a.data.short_bio,
+    photo: a.data.photo
+  })),
+  itemsPerPage: config.content.alumni_per_page
+}}>
+  // Alumni data for client-side filtering
+  let currentPage = 1;
+  let filteredAlumni = [...alumniData];
+  
+  // DOM elements
+  const searchInput = document.getElementById('search');
+  const facultyFilter = document.getElementById('faculty-filter');
+  const yearFilter = document.getElementById('year-filter');
+  const sortSelect = document.getElementById('sort-by');
+  const alumniGrid = document.getElementById('alumni-grid');
+  const resultsCount = document.getElementById('results-count');
+  const prevBtn = document.getElementById('prev-page');
+  const nextBtn = document.getElementById('next-page');
+  const pageNumbers = document.getElementById('page-numbers');
+  
+  // Filter and search functionality
+  function filterAlumni() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const facultyValue = facultyFilter.value;
+    const yearValue = yearFilter.value;
+    
+    filteredAlumni = alumniData.filter(alum => {
+      const matchesSearch = alum.name.toLowerCase().includes(searchTerm) ||
+                           alum.faculty.toLowerCase().includes(searchTerm) ||
+                           alum.short_bio.toLowerCase().includes(searchTerm);
+      const matchesFaculty = !facultyValue || alum.faculty === facultyValue;
+      const matchesYear = !yearValue || alum.year.toString() === yearValue;
+      
+      return matchesSearch && matchesFaculty && matchesYear;
+    });
+    
+    // Sort alumni
+    const sortBy = sortSelect.value;
+    filteredAlumni.sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'year':
+          return b.year - a.year;
+        case 'faculty':
+          return a.faculty.localeCompare(b.faculty);
+        default:
+          return 0;
+      }
+    });
+    
+    currentPage = 1;
+    updateDisplay();
+  }
+  
+  // Update display with pagination
+  function updateDisplay() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentAlumni = filteredAlumni.slice(startIndex, endIndex);
+    
+    // Update results count
+    if (resultsCount) {
+      resultsCount.textContent = filteredAlumni.length.toString();
+    }
+    
+    // Update grid
+    if (alumniGrid) {
+      alumniGrid.innerHTML = currentAlumni.map(alum => `
+  <div class="profile-card" data-faculty="${alum.faculty}" data-year="${alum.year}" data-name="${alum.name.toLowerCase()}">
+    <div class="relative">
+      ${alum.photo ? 
+        `<img src="${alum.photo}" alt="${alum.name}" class="profile-avatar" loading="lazy" />` :
+        `<div class="profile-avatar-placeholder">${alum.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>`
+      }
+      <div class="absolute top-0 right-0">
+        <span class="badge badge-primary">${alum.faculty}</span>
+      </div>
+    </div>
+    
+    <h3 class="text-xl font-semibold text-accent-900 mb-2">${alum.name}</h3>
+    <p class="text-accent-600 mb-3">${alum.short_bio}</p>
+    
+    <div class="flex items-center justify-center space-x-2 mb-4">
+      ${alum.linkedin ? 
+        `<a href="${alum.linkedin}" target="_blank" rel="noopener noreferrer" class="text-accent-400 hover:text-primary-600 transition-colors duration-200">
+          <Icon name="mdi:linkedin" class="w-5 h-5" />
+        </a>` : ''
+      }
+      ${alum.twitter ? 
+        `<a href="${alum.twitter}" target="_blank" rel="noopener noreferrer" class="text-accent-400 hover:text-primary-600 transition-colors duration-200">
+          <Icon name="mdi:twitter" class="w-5 h-5" />
+        </a>` : ''
+      }
+      ${alum.github ? 
+        `<a href="${alum.github}" target="_blank" rel="noopener noreferrer" class="text-accent-400 hover:text-primary-600 transition-colors duration-200">
+          <Icon name="mdi:github" class="w-5 h-5" />
+        </a>` : ''
+      }
+    </div>
+    
+    <div class="flex items-center justify-between text-sm text-accent-500">
+      <span>Class of ${alum.year}</span>
+      <a href="/alumni/profiles/${alum.slug}" class="text-primary-600 hover:text-primary-700 font-medium">
+        View Profile →
+      </a>
+    </div>
+  </div>
+`).join('');
+    }
+    
+    updatePagination();
+  }
+  
+  // Update pagination controls
+  function updatePagination() {
+    const totalPages = Math.ceil(filteredAlumni.length / itemsPerPage);
+    
+    // Update prev/next buttons
+    if (prevBtn) prevBtn.disabled = currentPage === 1;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+    
+    // Update page numbers
+    if (pageNumbers) {
+      pageNumbers.innerHTML = '';
+      
+      for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.className = `w-10 h-10 rounded-lg text-sm font-medium transition-colors duration-200 ${
+          i === currentPage 
+            ? 'bg-primary-600 text-white' 
+            : 'text-accent-600 hover:text-accent-900 hover:bg-accent-100'
+        }`;
+        pageBtn.textContent = i.toString();
+        pageBtn.addEventListener('click', () => {
+          currentPage = i;
+          updateDisplay();
+        });
+        pageNumbers.appendChild(pageBtn);
+      }
+    }
+  }
+  
+  // Event listeners
+  searchInput?.addEventListener('input', filterAlumni);
+  facultyFilter?.addEventListener('change', filterAlumni);
+  yearFilter?.addEventListener('change', filterAlumni);
+  sortSelect?.addEventListener('change', filterAlumni);
+  
+  prevBtn?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      updateDisplay();
+    }
+  });
+  
+  nextBtn?.addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredAlumni.length / itemsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      updateDisplay();
+    }
+  });
+  
+  // Initialize display
+  updateDisplay();
+</script>
+
+<style>
+  /* Container for search input to position icon */
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Search icon */
+.search-wrapper .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af; /* Tailwind text-accent-400 */
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+}
+
+/* Search input styling */
+#search {
+  width: 100%;
+  padding-left: 40px; /* space for icon */
+  padding-right: 12px;
+  height: 40px;
+  border: 1.5px solid #d1d5db; /* Tailwind border-accent-300 */
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #374151; /* Tailwind text-accent-700 */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline-offset: 2px;
+  outline-color: transparent;
+  box-shadow: none;
+  background-color: #fff;
+}
+
+#search::placeholder {
+  color: #9ca3af; /* Tailwind text-accent-400 */
+}
+
+#search:hover {
+  border-color: #6b7280; /* Tailwind text-accent-500 */
+}
+
+#search:focus {
+  border-color: #2563eb; /* Tailwind blue-600 */
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3); /* subtle blue focus ring */
+  outline-color: transparent;
+}
+</style>

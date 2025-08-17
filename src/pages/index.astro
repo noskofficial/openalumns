@@ -1,0 +1,463 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { getSiteConfig } from "../utils/config";
+import { Icon } from "astro-icon";
+
+const config = getSiteConfig();
+
+// Get sample data for preview
+const alumni = await getCollection("alumni");
+const events = await getCollection("events");
+const blogPosts = await getCollection("blog");
+
+// Get featured alumni (first 3)
+const featuredAlumni = alumni.slice(0, 3);
+
+// Get latest events (first 4)
+const latestEvents = events
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+  .slice(0, 4);
+
+// Get latest blog posts (first 3)
+const latestBlogPosts = blogPosts
+  .filter((post) => !post.data.draft)
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime()
+  )
+  .slice(0, 3);
+---
+
+<Layout title={config.site.name} description={config.site.description}>
+  <!-- Hero Section -->
+  <section class="hero section-sm">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="text-center lg:text-left">
+          <h1
+            class="text-5xl md:text-6xl lg:text-7xl font-bold text-accent-900 mb-6 leading-tight"
+          >
+            Connect with Your
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-600"
+            >
+              Alumni Network
+            </span>
+          </h1>
+          <p class="text-xl md:text-2xl text-accent-600 mb-8 leading-relaxed">
+            Stay connected with fellow graduates, discover opportunities, and
+            build lasting professional relationships.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+          >
+            <a href="/alumni/profiles" class="btn btn-primary btn-lg">
+              <Icon name="mdi:account-search" class="w-6 h-6 mr-2" />
+              Browse Alumni
+            </a>
+            <a href="/about" class="btn btn-outline btn-lg">
+              <Icon name="mdi:information" class="w-6 h-6 mr-2" />
+              Learn More
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="relative z-10">
+            <div
+              class="bg-gradient-to-br from-primary-500 to-secondary-500 rounded-3xl p-8 md:p-12 shadow-2xl"
+            >
+              <div class="text-center text-white">
+                <Icon
+                  name="mdi:account-group"
+                  class="w-24 h-24 md:w-32 md:h-32 mx-auto mb-6"
+                />
+                <h3 class="text-2xl md:text-3xl font-bold mb-4">
+                  Join Our Network
+                </h3>
+                <p class="text-lg mb-6 opacity-90">
+                  Connect with {alumni.length}+ alumni from {
+                    config.organization.name
+                  }
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href="/alumni"
+                    class="btn btn-secondary btn-lg text-white hover:bg-secondary-600"
+                  >
+                    <Icon name="mdi:search" class="w-6 h-6 mr-2" />
+                    Browse Network
+                  </a>
+                      <a
+                        href={config.features.alumni_registration.enabled ? config.features.alumni_registration.url : "#"}
+                        class="btn btn-white btn-lg text-secondary-600 hover:bg-secondary-50"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon name="mdi:account-plus" class="w-6 h-6 mr-2" />
+                        Join Now
+                      </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative elements -->
+          <div
+            class="absolute -top-4 -right-4 w-24 h-24 bg-secondary-200 rounded-full opacity-50 animate-pulse"
+          >
+          </div>
+          <div
+            class="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-200 rounded-full opacity-50 animate-pulse animation-delay-1000"
+          >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="section-sm bg-gradient-to-r from-accent-50 to-accent-100">
+    <div class="container-custom">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
+          >
+            <Icon name="mdi:account-group" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-primary-900 mb-2">
+            {alumni.length}+
+          </h3>
+          <p class="text-accent-700 font-medium">Alumni</p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
+          >
+            <Icon name="mdi:school" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-secondary-900 mb-2">
+            {config.faculties.length}
+          </h3>
+          <p class="text-accent-700 font-medium">Faculties</p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-accent-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
+          >
+            <Icon name="mdi:calendar" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-accent-900 mb-2">
+            {config.years.end - config.years.start + 1}
+          </h3>
+          <p class="text-accent-700 font-medium">Years</p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
+          >
+            <Icon name="mdi:map-marker" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-primary-900 mb-2">Global</h3>
+          <p class="text-accent-700 font-medium">Network</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Events Section -->
+  <section class="section">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-accent-900 mb-4">
+          Upcoming Events
+        </h2>
+        <p class="text-xl text-accent-600 max-w-3xl mx-auto">
+          Stay updated with the latest events, reunions, and networking
+          opportunities in our alumni community.
+        </p>
+      </div>
+
+      <div class="grid-responsive mb-12">
+        {
+          latestEvents.map((event) => (
+            <div class="event-card group">
+              <div class="relative mb-4">
+                {event.data.image ? (
+                  <img
+                    src={event.data.image}
+                    alt={event.data.title}
+                    class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-48 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
+                    <Icon
+                      name="mdi:calendar-event"
+                      class="w-16 h-16 text-primary-400"
+                    />
+                  </div>
+                )}
+                <div class="absolute top-4 right-4">
+                  <span class="badge badge-primary">
+                    {new Date(event.data.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                </div>
+              </div>
+
+              <h3 class="text-xl font-semibold text-accent-900 mb-2 group-hover:text-primary-600 transition-colors duration-200">
+                {event.data.title}
+              </h3>
+              <p class="text-accent-600 mb-4 line-clamp-2">
+                {event.data.description}
+              </p>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-sm text-accent-500">
+                  <Icon name="mdi:map-marker" class="w-4 h-4" />
+                  <span>{event.data.location}</span>
+                </div>
+                <a
+                  href={`/events/${event.data.slug}`}
+                  class="text-primary-600 hover:text-primary-700 font-medium"
+                >
+                  Learn More →
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="text-center">
+        <a href="/events" class="btn btn-outline btn-lg">
+          <Icon name="mdi:calendar-multiple" class="w-6 h-6 mr-2" />
+          View All Events
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Alumni Section -->
+  <section class="section bg-gradient-to-br from-accent-50 to-primary-50">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-accent-900 mb-4">
+          Featured Alumni
+        </h2>
+        <p class="text-xl text-accent-600 max-w-3xl mx-auto">
+          Meet some of our outstanding alumni who are making a difference in
+          their fields.
+        </p>
+      </div>
+
+      <div class="grid-responsive mb-12">
+        {
+          featuredAlumni.map((alum) => (
+            <div class="profile-card text-center group">
+              <div class="relative mb-6">
+                {alum.data.photo ? (
+                  <img
+                    src={alum.data.photo}
+                    alt={alum.data.name}
+                    class="profile-avatar group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="profile-avatar-placeholder group-hover:scale-105 transition-transform duration-300">
+                    {alum.data.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </div>
+                )}
+                <div class="absolute top-0 right-0">
+                  <span class="badge badge-primary">{alum.data.faculty}</span>
+                </div>
+              </div>
+
+              <h3 class="text-xl font-semibold text-accent-900 mb-2">
+                {alum.data.name}
+              </h3>
+              <p class="text-accent-600 mb-4 line-clamp-3">
+                {alum.data.short_bio}
+              </p>
+
+              <div class="flex items-center justify-center space-x-2 mb-4">
+                {alum.data.linkedin && (
+                  <a
+                    href={alum.data.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-accent-400 hover:text-primary-600 transition-colors duration-200"
+                  >
+                    <Icon name="mdi:linkedin" class="w-5 h-5" />
+                  </a>
+                )}
+                {alum.data.twitter && (
+                  <a
+                    href={alum.data.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-accent-400 hover:text-primary-600 transition-colors duration-200"
+                  >
+                    <Icon name="mdi:twitter" class="w-5 h-5" />
+                  </a>
+                )}
+                {alum.data.github && (
+                  <a
+                    href={alum.data.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-accent-400 hover:text-primary-600 transition-colors duration-200"
+                  >
+                    <Icon name="mdi:github" class="w-5 h-5" />
+                  </a>
+                )}
+              </div>
+
+              <div class="text-sm text-accent-500 mb-4">
+                Class of {alum.data.year}
+              </div>
+
+              <a
+                href={`/alumni/${alum.data.slug}`}
+                class="btn btn-primary btn-sm w-full"
+              >
+                View Profile
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="text-center">
+        <a href="/alumni/profiles" class="btn btn-outline btn-lg">
+          <Icon name="mdi:account-multiple" class="w-6 h-6 mr-2" />
+          Meet More Alumni
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Blog Posts Section -->
+  <section class="section">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-accent-900 mb-4">
+          Latest News & Insights
+        </h2>
+        <p class="text-xl text-accent-600 max-w-3xl mx-auto">
+          Stay informed with the latest updates, stories, and insights from our
+          alumni community.
+        </p>
+      </div>
+
+      <div class="grid-responsive mb-12">
+        {
+          latestBlogPosts.map((post) => (
+            <div class="blog-card group">
+              <div class="relative mb-4">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-48 bg-gradient-to-br from-accent-100 to-primary-100 rounded-xl flex items-center justify-center">
+                    <Icon
+                      name="mdi:newspaper"
+                      class="w-16 h-16 text-accent-400"
+                    />
+                  </div>
+                )}
+                <div class="absolute top-4 left-4">
+                  <span class="badge badge-secondary">
+                    {post.data.category}
+                  </span>
+                </div>
+              </div>
+
+              <h3 class="text-xl font-semibold text-accent-900 mb-2 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2">
+                {post.data.title}
+              </h3>
+              <p class="text-accent-600 mb-4 line-clamp-3">
+                {post.data.description}
+              </p>
+
+              <div class="flex items-center justify-between text-sm text-accent-500 mb-4">
+                <span>
+                  {new Date(post.data.publishDate).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+                <span>By {post.data.author}</span>
+              </div>
+
+              <a
+                href={`/blog/${post.slug}`}
+                class="text-primary-600 hover:text-primary-700 font-medium"
+              >
+                Read More →
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="text-center">
+        <a href="/blog" class="btn btn-outline btn-lg">
+          <Icon name="mdi:newspaper" class="w-6 h-6 mr-2" />
+          Read All Posts
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="section bg-gradient-to-br from-primary-600 to-secondary-600">
+    <div class="container-custom text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+        Ready to Connect?
+      </h2>
+      <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+        Join our thriving alumni network and stay connected with your fellow
+        graduates. Discover opportunities, share experiences, and build lasting
+        relationships.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/alumni"
+          class="btn btn-secondary btn-lg text-white hover:bg-secondary-600 transition-colors duration-200"
+        >
+          <Icon name="mdi:account-plus" class="w-6 h-6 mr-2" />
+          Join the Network
+        </a>
+
+        <a
+          href="/about"
+          class="btn btn-primary btn-lg text-white hover:bg-primary-700 transition-colors duration-200"
+        >
+          <Icon name="mdi:information" class="w-6 h-6 mr-2" />
+          Learn More
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,42 @@
+name: "Emma Rodriguez"
+slug: "emma-rodriguez"
+faculty: "Civil Engineering"
+year: 2023
+short_bio: "Civil engineer focused on sustainable infrastructure and green building design"
+long_bio: "Emma is a passionate civil engineer dedicated to creating sustainable infrastructure solutions. She specializes in green building design and environmental impact assessment."
+photo: "/images/avatars/default-avatar.svg"
+email: "emma.rodriguez@email.com"
+location: "Portland, OR"
+company: "GreenBuild Engineering"
+position: "Sustainability Engineer"
+skills: ["Structural Design", "Sustainability", "LEED Certification", "AutoCAD", "Environmental Assessment"]
+projects:
+  - name: "Eco-Friendly Office Complex"
+    description: "LEED Platinum certified office building with sustainable features"
+    url: "https://greenbuild.com/office-complex"
+  - name: "Green Bridge Design"
+    description: "Sustainable bridge design incorporating renewable materials"
+    url: "https://greenbuild.com/bridge"
+work_experience:
+  - company: "GreenBuild Engineering"
+    position: "Sustainability Engineer"
+    duration: "2023 - Present"
+    description: "Leading sustainable design projects and LEED certification"
+  - company: "City Planning Department"
+    position: "Civil Engineer Intern"
+    duration: "2022 - 2023"
+    description: "Assisted in urban planning and infrastructure projects"
+education:
+  - degree: "Bachelor of Engineering in Civil Engineering"
+    institution: "University of Technology"
+    year: 2023
+    gpa: "3.7/4.0"
+achievements:
+  - "LEED Green Associate Certification"
+  - "Environmental Engineering Excellence Award"
+  - "Student Leadership Award"
+interests: ["Sustainability", "Green Building", "Urban Planning", "Environmental Conservation"]
+social:
+  linkedin: "https://linkedin.com/in/emma-rodriguez"
+  twitter: "https://twitter.com/emmarodriguez"
+  github: "https://github.com/emmarodriguez"

@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+
+const events = await getCollection('events');
+const now = new Date();
+const upcoming = events.filter(e => new Date(e.data.date) >= now).sort((a,b)=> new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
+const past = events.filter(e => new Date(e.data.date) < now).sort((a,b)=> new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Events' },
+];
+---
+
+<Layout title="Events">
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <h1 class="text-3xl font-bold mb-6">Events</h1>
+
+      <div class="mb-6 flex gap-2">
+        <button class="tab-btn btn btn-outline btn-sm" data-tab="upcoming">Upcoming</button>
+        <button class="tab-btn btn btn-outline btn-sm" data-tab="past">Past</button>
+      </div>
+
+      <div id="tab-upcoming">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {upcoming.map(e => (
+            <a href={`/events/${e.data.slug}`} class="card card-hover block">
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="badge badge-primary">Upcoming</span>
+                  <span class="text-sm text-gray-500">{new Date(e.data.date).toDateString()}</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">{e.data.title}</h3>
+                <p class="text-gray-600 mb-4">{e.data.description}</p>
+                {e.data.location && (<p class="text-sm text-gray-500">{e.data.location}</p>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div id="tab-past" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {past.map(e => (
+            <a href={`/events/${e.data.slug}`} class="card card-hover block">
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="badge badge-accent">Past</span>
+                  <span class="text-sm text-gray-500">{new Date(e.data.date).toDateString()}</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">{e.data.title}</h3>
+                <p class="text-gray-600 mb-4">{e.data.description}</p>
+                {e.data.location && (<p class="text-sm text-gray-500">{e.data.location}</p>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const up = document.getElementById('tab-upcoming');
+    const past = document.getElementById('tab-past');
+    buttons.forEach(b => b.addEventListener('click', () => {
+      const tab = b.getAttribute('data-tab');
+      if (tab === 'upcoming') { up.classList.remove('hidden'); past.classList.add('hidden'); }
+      else { past.classList.remove('hidden'); up.classList.add('hidden'); }
+    }));
+  </script>
+</Layout>

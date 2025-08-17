@@ -1,0 +1,43 @@
+name: "Michael Chen"
+slug: "michael-chen"
+faculty: "Electronics Engineering"
+year: 2021
+short_bio: "Electronics engineer specializing in IoT and embedded systems"
+long_bio: "Michael is an innovative electronics engineer with deep expertise in IoT devices, embedded systems, and hardware design. He has successfully launched several IoT products in the market."
+photo: "/images/avatars/default-avatar.svg"
+email: "michael.chen@email.com"
+location: "Austin, TX"
+company: "IoT Solutions Inc."
+position: "Lead Hardware Engineer"
+skills: ["IoT", "Embedded Systems", "PCB Design", "C/C++", "Python", "Arduino"]
+projects:
+  - name: "Smart Home Hub"
+    description: "Centralized IoT hub for smart home automation"
+    url: "https://github.com/michaelchen/smarthome"
+  - name: "Environmental Monitor"
+    description: "IoT device for monitoring air quality and temperature"
+    url: "https://github.com/michaelchen/envmonitor"
+work_experience:
+  - company: "IoT Solutions Inc."
+    position: "Lead Hardware Engineer"
+    duration: "2021 - Present"
+    description: "Leading hardware design and development for IoT products"
+  - company: "TechStart"
+    position: "Electronics Engineer"
+    duration: "2019 - 2021"
+    description: "Designed and prototyped various electronic devices"
+education:
+  - degree: "Bachelor of Engineering in Electronics Engineering"
+    institution: "University of Technology"
+    year: 2021
+    gpa: "3.9/4.0"
+achievements:
+  - "Innovation Award for IoT Product Design"
+  - "Patent for Smart Sensor Technology"
+  - "Best Graduate Student Award"
+interests: ["IoT", "Hardware Hacking", "Electronics", "Innovation"]
+social:
+  portfolio: "https://michaelchen.io"
+  linkedin: "https://linkedin.com/in/michael-chen"
+  twitter: "https://twitter.com/michaelchen"
+  github: "https://github.com/michaelchen"

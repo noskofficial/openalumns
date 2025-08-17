@@ -1,0 +1,27 @@
+---
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+const { items } = Astro.props as { items: Crumb[] };
+---
+<nav class="bg-gray-50 py-3">
+  <div class="container-custom">
+    <ol class="flex items-center text-sm text-gray-600">
+      {items.map((item, index) => (
+        <li class="flex items-center">
+          {item.href ? (
+            <a href={item.href} class="hover:text-primary-600">{item.label}</a>
+          ) : (
+            <span class="text-gray-900 font-medium">{item.label}</span>
+          )}
+          {index < items.length - 1 && (
+            <svg class="w-4 h-4 mx-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+</nav>

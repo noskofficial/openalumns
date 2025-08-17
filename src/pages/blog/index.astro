@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort((a,b)=> new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog' },
+];
+---
+
+<Layout title="Blog">
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <h1 class="text-3xl font-bold mb-6">Blog</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {posts.map(p => (
+          <a href={`/blog/${p.slug}`} class="card card-hover block">
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">{p.data.title}</h3>
+              <p class="text-gray-600 mb-4">{p.data.description}</p>
+              <p class="text-sm text-gray-500">{new Date(p.data.publishDate).toDateString()}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

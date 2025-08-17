@@ -1,0 +1,107 @@
+---
+import { getSiteConfig } from '../utils/config';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { title, description, image, canonical } = Astro.props;
+const config = getSiteConfig();
+
+const pageTitle = title === 'Home' ? config.site.name : config.seo.title_template.replace('%s', title);
+const pageDescription = description || config.seo.default_description;
+const pageImage = image || config.seo.og_image;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={pageDescription} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={config.site.logo} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="keywords" content={config.seo.keywords.join(', ')} />
+    <meta name="author" content={config.seo.author} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={new URL(pageImage, Astro.url)} />
+    <meta property="og:url" content={canonical || Astro.url} />
+    <meta property="og:site_name" content={config.site.name} />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content={config.seo.twitter_card} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={new URL(pageImage, Astro.url)} />
+    
+    <!-- Canonical URL -->
+    {canonical && <link rel="canonical" href={canonical} />}
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+
+  </head>
+  <body class="bg-white text-gray-900 font-sans antialiased">
+    <div class="min-h-screen flex flex-col">
+      <Navigation />
+      
+      <main class="flex-grow">
+        <slot />
+      </main>
+      
+      <Footer />
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-8 right-8 bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible hover:scale-110 z-50"
+      aria-label="Back to top"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      </svg>
+    </button>
+    
+    <!-- Back to Top Script -->
+    <script>
+      const backToTopButton = document.getElementById('back-to-top');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopButton?.classList.remove('opacity-0', 'invisible');
+          backToTopButton?.classList.add('opacity-100', 'visible');
+        } else {
+          backToTopButton?.classList.add('opacity-0', 'invisible');
+          backToTopButton?.classList.remove('opacity-100', 'visible');
+        }
+      });
+      
+      backToTopButton?.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    </script>
+  </body>
+</html>

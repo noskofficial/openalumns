@@ -1,0 +1,29 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getSiteConfig } from '@/utils/config';
+
+const config = getSiteConfig();
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Faculties' },
+];
+---
+
+<Layout title="Faculties">
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <h1 class="text-3xl font-bold mb-6">Browse by Faculty</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {config.faculties.map(f => (
+          <a class="card p-6" href={`/alumni/faculties/${f.slug}`}>
+            <h3 class="text-lg font-semibold">{f.name}</h3>
+            <p class="text-gray-600 text-sm">{f.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

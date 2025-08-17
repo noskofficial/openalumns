@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(p => ({ params: { slug: p.slug }, props: { slug: p.slug } }));
+}
+
+const { slug } = Astro.props as { slug: string };
+const post = await getEntry('blog', slug);
+const { Content } = await post.render();
+const data = post?.data as any;
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: data.title },
+];
+---
+
+<Layout title={data.title} description={data.description} image={data.image}>
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <article class="prose max-w-none">
+        <h1 class="mb-2">{data.title}</h1>
+        <p class="text-gray-500 mb-6">{data.publishDate}</p>
+        <Content />
+      </article>
+    </div>
+  </section>
+</Layout>

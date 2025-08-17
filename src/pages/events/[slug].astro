@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map(e => ({ params: { slug: e.data.slug }, props: { event: e.data } }));
+}
+
+const { event } = Astro.props as { event: any };
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Events', href: '/events' },
+  { label: event.title },
+];
+---
+
+<Layout title={event.title} description={event.description}>
+  <Breadcrumbs items={breadcrumbItems} />
+  <section class="section">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 card p-6">
+          <h1 class="text-3xl font-bold mb-2">{event.title}</h1>
+          <p class="text-gray-600 mb-4">{event.description}</p>
+          {event.image && (<img src={event.image} alt={event.title} class="rounded mb-4" />)}
+          <div class="prose max-w-none">
+            <div> {event.content} </div>
+          </div>
+        </div>
+        <div class="lg:col-span-1 space-y-4">
+          <div class="card p-6">
+            <h2 class="font-semibold mb-3">Details</h2>
+            <ul class="text-sm text-gray-700 space-y-2">
+              <li><strong>Date:</strong> {new Date(event.date).toDateString()}</li>
+              {event.location && (<li><strong>Location:</strong> {event.location}</li>)}
+            </ul>
+            {event.registration_url && (
+              <a href={event.registration_url} target="_blank" class="btn btn-primary btn-sm mt-4 w-full">Register</a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
